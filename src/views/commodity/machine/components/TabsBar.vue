@@ -13,6 +13,7 @@
     <el-form v-model="search" :size="'mini'" :label-width="'80px'">
       <el-button-group style="float:right;padding-bottom: 10px">
          <el-button v-for="(t,i) in btnList" :key="i" v-if="t.category == 'default'" :size="'mini'" type="primary" :icon="t.cuicon" @click="onFun(t.path)">{{t.menuName}}</el-button>
+          <el-button v-else :size="'mini'" type="primary" icon="el-icon-printer" @click="printer" v-print="'#all'">打印</el-button>
         <!--<el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="handlerAdd">新增</el-button>
         <el-button :size="'mini'" type="primary" icon="el-icon-edit" @click="handlerAlter">修改</el-button>
         <el-button :size="'mini'" type="primary" icon="el-icon-edit" @click="handlerProduce">生产录入</el-button>
@@ -80,7 +81,7 @@ export default {
       if (this.selections.length > 0) {
         this.$nextTick(() => {
           this.selections.forEach((item, index) => {
-            that.creatQrCode('qrCode' + index, 'https://cfzx.gzfzdev.com/groupTicket?qrCode=' + item.qrCode)
+            that.creatQrCode('qrCode' + index, 'http://test.gzfzdev.com:10005/redirect/scanResult?qrCode=' + item.qrCode)
           })
         })
       } else {
