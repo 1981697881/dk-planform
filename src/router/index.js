@@ -52,7 +52,7 @@ export const StaticRouterMap = [{
       affix: true
     }
   }]
-}, {
+}/*, {
   path: '/basic',
   component: Layout,
   name: 'Basic',
@@ -104,7 +104,7 @@ export const StaticRouterMap = [{
     }
   }]
 }
-  /* {
+   {
     path: 'external-link',
     component: Layout,
     children: [

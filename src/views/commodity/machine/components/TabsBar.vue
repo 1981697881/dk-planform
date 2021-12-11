@@ -5,7 +5,7 @@
         <div class="myPrint">
           <div class="pageWarp" v-for="(item,index) in selections" :key="index">
             <div class="scanImg" :id="'qrCode'+index"></div>
-            <div style="padding: 5px;text-align: center;">查询产品信息</div>
+            <div style="padding-top:2px;font-size: 13px">查询产品信息</div>
           </div>
         </div>
       </div>
@@ -81,7 +81,7 @@ export default {
       if (this.selections.length > 0) {
         this.$nextTick(() => {
           this.selections.forEach((item, index) => {
-            that.creatQrCode('qrCode' + index, 'http://test.gzfzdev.com:10005/redirect/scanResult?qrCode=' + item.qrCode)
+            that.creatQrCode('qrCode' + index, 'http://14.29.254.232:50005/duke/redirect/scanResult?qrCode=' + item.qrCode)
           })
         })
       } else {
@@ -156,7 +156,9 @@ export default {
   }
 
   .scanImg img {
-    margin: 0 auto;
+    height: 19mm;
+    width: 19mm;
+    margin-left: 0.5mm;
   }
 
   .printClass {
@@ -166,12 +168,17 @@ export default {
   }
   .rowClass {
     heihgt: 30mm;
-    width: 35mm;
+    width: 70mm;
   }
   .rowClass .pageWarp {
-    page-break-after: always;
+    width: 35mm;
+    float: left;
+    padding-left: 2mm;
   }
-
+  .rowClass .pageWarp:nth-child(even) {
+    page-break-after: always;
+    padding-left: 12mm;
+  }
   .rowClass .myPrint {
     -webkit-print-color-adjust: exact;
   }
