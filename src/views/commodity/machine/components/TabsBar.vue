@@ -1,19 +1,23 @@
 <template>
   <div class="list-header">
     <div class="printClass">
-      <div  id="all" class="rowClass">
+      <div id="all" class="rowClass">
         <div class="myPrint">
           <div class="pageWarp" v-for="(item,index) in selections" :key="index">
-            <div class="scanImg" :id="'qrCode'+index"></div>
-            <div style="padding-top:2px;font-size: 13px">查询产品信息</div>
+            <!--<div class="scanImg" :id="'qrCode'+index"></div>-->
+            <vue-qr class="scanImg" :text="'http://14.29.254.232:50005/duke/redirect/scanResult?qrCode=' + item.qrCode" :margin="0" :logoScale="0.2" :logoSrc="require(`@/assets/img/logo.png`)"></vue-qr>
+            <div style="white-space: nowrap;font-size: .12rem;-webkit-transform-origin-x: 0;-webkit-transform: scale(0.80);">杜克阀门产品溯源信息
+            </div>
           </div>
         </div>
       </div>
     </div>
     <el-form v-model="search" :size="'mini'" :label-width="'80px'">
       <el-button-group style="float:right;padding-bottom: 10px">
-         <el-button v-for="(t,i) in btnList" :key="i" v-if="t.category == 'default'" :size="'mini'" type="primary" :icon="t.cuicon" @click="onFun(t.path)">{{t.menuName}}</el-button>
-          <el-button v-else :size="'mini'" type="primary" icon="el-icon-printer" @click="printer" v-print="'#all'">打印</el-button>
+        <el-button v-for="(t,i) in btnList" :key="i" v-if="t.category == 'default'" :size="'mini'" type="primary" :icon="t.cuicon" @click="onFun(t.path)">{{t.menuName}}
+        </el-button>
+        <el-button v-else :size="'mini'" type="primary" icon="el-icon-printer" v-print="'#all'">打印</el-button>
+        <!--@click="printer"-->
         <!--<el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="handlerAdd">新增</el-button>
         <el-button :size="'mini'" type="primary" icon="el-icon-edit" @click="handlerAlter">修改</el-button>
         <el-button :size="'mini'" type="primary" icon="el-icon-edit" @click="handlerProduce">生产录入</el-button>
@@ -29,8 +33,12 @@
 <script>import { mapGetters } from 'vuex'
 import { getByUserAndPrId } from '@/api/system/index'
 import QRCode from 'qrcodejs2'
+import vueQr from 'vue-qr'
 
 export default {
+  components: {
+    vueQr
+  },
   data() {
     return {
       btnList: [],
@@ -46,8 +54,8 @@ export default {
     let path = this.$route.meta.id
     getByUserAndPrId(path).then(res => {
       this.btnList = res.data
-      this.$forceUpdate();
-    });
+      this.$forceUpdate()
+    })
   },
   methods: {
     creatQrCode(element, val) {
@@ -154,17 +162,15 @@ export default {
       margin: 3mm;
     }
   }
-
-  .scanImg img {
-    height: 19mm;
-    width: 19mm;
+  .scanImg {
+    height: 23mm;
+    width: 23mm;
     margin-left: 0.5mm;
   }
-
   .printClass {
-    width: 0;
-    height: 0;
-    overflow: hidden;
+     width: 0;
+     height: 0;
+     overflow: hidden;
   }
   .rowClass {
     heihgt: 30mm;
@@ -177,7 +183,7 @@ export default {
   }
   .rowClass .pageWarp:nth-child(even) {
     page-break-after: always;
-    padding-left: 12mm;
+    padding-left: 8mm;
   }
   .rowClass .myPrint {
     -webkit-print-color-adjust: exact;
