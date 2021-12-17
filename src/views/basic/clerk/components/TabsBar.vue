@@ -48,7 +48,8 @@ export default {
     });
   },
   methods: {
-    onFun(method){
+    onFun(method) {
+      console.log(method)
       this[method]()
     },
     Delivery() {
@@ -127,7 +128,7 @@ export default {
       this.search.name != null && this.search.name != '' ? obj.name = this.search.name : null
       return obj
     },
-    handleAdd(){
+    handlerAdd(){
       this.$emit('showDialog')
     }
   }

@@ -33,7 +33,12 @@
         </el-col>
         <el-col :span="12">
           <el-form-item :label="'订单时间'" prop="orderDate">
-            <el-input v-model="form.orderDate"></el-input>
+            <el-date-picker
+              v-model="form.orderDate"
+              type="date"
+              style="width: auto"
+              placeholder="选择日期">
+            </el-date-picker>
           </el-form-item>
         </el-col>
       </el-row>
