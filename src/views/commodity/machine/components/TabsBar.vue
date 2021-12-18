@@ -5,8 +5,11 @@
         <div class="myPrint">
           <div class="pageWarp" v-for="(item,index) in selections" :key="index">
             <!--<div class="scanImg" :id="'qrCode'+index"></div>-->
-            <vue-qr class="scanImg" :text="'http://14.29.254.232:50005/duke/redirect/scanResult?qrCode=' + item.qrCode" :margin="0" :logoScale="0.2" :logoSrc="require(`@/assets/img/logo.png`)"></vue-qr>
-            <div style="white-space: nowrap;font-size: .12rem;-webkit-transform-origin-x: 0;-webkit-transform: scale(0.80);">杜克阀门产品溯源信息
+            <vue-qr class="scanImg" :text="'http://14.29.254.232:50005/duke/redirect/scanResult?qrCode=' + item.qrCode"
+                    :margin="0" :logoScale="0.2" :logoSrc="require(`@/assets/img/logo.png`)"></vue-qr>
+            <div
+              style="white-space: nowrap;font-size: .12rem;-webkit-transform-origin-x: 0;-webkit-transform: scale(0.80);">
+              杜克阀门产品溯源信息
             </div>
           </div>
         </div>
@@ -14,7 +17,8 @@
     </div>
     <el-form v-model="search" :size="'mini'" :label-width="'80px'">
       <el-button-group style="float:right;padding-bottom: 10px">
-        <el-button v-for="(t,i) in btnList" :key="i" v-if="t.category == 'default'" :size="'mini'" type="primary" :icon="t.cuicon" @click="onFun(t.path)">{{t.menuName}}
+        <el-button v-for="(t,i) in btnList" :key="i" v-if="t.category == 'default'" :size="'mini'" type="primary"
+                   :icon="t.cuicon" @click="onFun(t.path)">{{t.menuName}}
         </el-button>
         <el-button v-else :size="'mini'" type="primary" icon="el-icon-printer" v-print="'#all'">打印</el-button>
         <!--@click="printer"-->
@@ -24,6 +28,26 @@
         <el-button :size="'mini'" type="primary" icon="el-icon-edit" @click="handlerSale">销售录入</el-button>
         <el-button :size="'mini'" type="primary" icon="el-icon-delete" @click="del">删除</el-button>
         <el-button :size="'mini'" type="primary" icon="el-icon-printer" @click="printer" v-print="'#all'">打印</el-button>-->
+        <el-upload
+          name="product"
+          :on-success="uploadSuccess"
+          :on-error="uploadError"
+          accept="xlsx,xls"
+          ref="upload"
+          :headers="headers"
+          :show-file-list="false"
+          :action="fileUrl"
+          class="upload-demo"
+          multiple
+          :auto-upload="false"
+          :on-change="handleUpload"
+          :limit="1"
+        >
+          <el-button size="mini" type="primary" icon="el-icon-upload2">导入</el-button>
+          <el-button style="margin-left: 10px;display: none" size="mini" type="success" @click="submitUpload">上传到服务器
+          </el-button>
+        </el-upload>
+        <el-button :size="'mini'" type="primary" icon="el-icon-download" @click="exportData">导出</el-button>
         <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
       </el-button-group>
     </el-form>
@@ -34,6 +58,7 @@
 import { getByUserAndPrId } from '@/api/system/index'
 import QRCode from 'qrcodejs2'
 import vueQr from 'vue-qr'
+import { getToken } from '@/utils/auth'
 
 export default {
   components: {
@@ -42,6 +67,10 @@ export default {
   data() {
     return {
       btnList: [],
+      headers: {
+        'authorization': getToken('dkrx')
+      },
+      fileUrl: '',
       search: {
         name: ''
       }
@@ -51,6 +80,7 @@ export default {
     ...mapGetters(['node', 'clickData', 'selections'])
   },
   mounted() {
+    this.fileUrl = `${window.location.origin}/duke/inputData/inputProductMessage`
     let path = this.$route.meta.id
     getByUserAndPrId(path).then(res => {
       this.btnList = res.data
@@ -58,6 +88,40 @@ export default {
     })
   },
   methods: {
+    // 导出
+    exportData() {
+      this.$emit('exportData')
+    },
+    submitUpload() {
+      this.$refs.upload.submit()
+    },
+    uploadError(res) {
+      this.$message({
+        message: res.msg,
+        type: 'warning'
+      })
+      this.$emit('uploadList')
+    },
+    uploadSuccess(res) {
+      if (res.flag) {
+        this.$message({
+          message: res.msg,
+          type: 'success'
+        })
+        this.$emit('uploadList')
+      } else {
+        this.$message({
+          message: res.msg,
+          type: 'warning'
+        })
+      }
+    },
+    handleUpload(file, fileList) {
+      if (file.status == 'ready') {
+        this.submitUpload()
+      }
+
+    },
     creatQrCode(element, val) {
       var deleteNode = document.getElementById(element).innerText = ''
       var qrcode = new QRCode(element, {
@@ -162,31 +226,39 @@ export default {
       margin: 3mm;
     }
   }
+
   .scanImg {
     height: 23mm;
     width: 23mm;
     margin-left: 0.5mm;
   }
+
   .printClass {
-     width: 0;
-     height: 0;
-     overflow: hidden;
+    width: 0;
+    height: 0;
+    overflow: hidden;
   }
+
   .rowClass {
     heihgt: 30mm;
     width: 70mm;
   }
+
   .rowClass .pageWarp {
     width: 35mm;
     float: left;
     padding-left: 2mm;
   }
+
   .rowClass .pageWarp:nth-child(even) {
     page-break-after: always;
     padding-left: 8mm;
   }
+
   .rowClass .myPrint {
     -webkit-print-color-adjust: exact;
   }
-
+  .upload-demo{
+    float: right;
+  }
 </style>

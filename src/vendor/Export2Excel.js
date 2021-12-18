@@ -237,13 +237,9 @@ export function export_json_to_excel(th, jsonData, defaultTitle,multiHeader = []
   }))
   /*以第一行为初始值*/
   let result = colWidth[0];
-
   for (let i = 1; i < colWidth.length; i++) {
-
     for (let j = 0; j < colWidth[i].length; j++) {
-
       if (result[j]['wch'] < colWidth[i][j]['wch']) {
-
         result[j]['wch'] = colWidth[i][j]['wch'];
 
       }
