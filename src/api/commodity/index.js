@@ -17,6 +17,18 @@ export function getGoodsList(params, data) {
   })
 }
 // 产品信息-新增
+export function insertCommodity(params) {
+  const url = '/productInput/insert'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('dkrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'post',
+    data: params
+  })
+}// 产品信息-新增
 export function addCommodity(params) {
   const url = '/productInput/insertProductMessage'
   return request({
@@ -58,6 +70,19 @@ export function insertSaleMessage(params) {
 // 产品信息-刪除
 export function deleteCommodity(params) {
   const url = '/productInput/deleteProductMessage'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('dkrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'post',
+    data: params
+  })
+}
+// 产品信息-刪除
+export function productInputDelete(params) {
+  const url = '/productInput/delete'
   return request({
     url: url,
     headers: {

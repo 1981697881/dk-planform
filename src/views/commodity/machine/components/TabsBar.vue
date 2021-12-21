@@ -80,7 +80,8 @@ export default {
     ...mapGetters(['node', 'clickData', 'selections'])
   },
   mounted() {
-    this.fileUrl = `${window.location.origin}/duke/inputData/inputProductMessage`
+    /*this.fileUrl = `${window.location.origin}/duke/inputData/inputProductMessage`*/
+    this.fileUrl = `${window.location.origin}/duke/inputData/input`
     let path = this.$route.meta.id
     getByUserAndPrId(path).then(res => {
       this.btnList = res.data

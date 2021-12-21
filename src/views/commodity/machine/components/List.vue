@@ -16,7 +16,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { getGoodsList, deleteCommodity } from '@/api/commodity/index'
+import { getGoodsList, productInputDelete } from '@/api/commodity/index'
 import List from '@/components/List'
 
 export default {
@@ -68,7 +68,7 @@ export default {
         const list = this.list.records
         const data = this.formatJson(filterVal, list);
         // 这里还是使用export_json_to_excel方法比较好，方便操作数据
-        excel.export_json_to_excel([tHeader],data,'产品信息')
+        excel.export_json_to_excel(tHeader,data,'产品信息')
       })
     },
     formatJson(filter, jsonDate){
@@ -89,7 +89,7 @@ export default {
       this.$emit('uploadList')
     },
     Delivery(val) {
-      deleteCommodity(val).then(res => {
+      productInputDelete(val).then(res => {
         if(res.flag) {
           this.$store.dispatch('list/setClickData', '');
           this.$emit('uploadList')

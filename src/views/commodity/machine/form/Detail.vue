@@ -66,6 +66,42 @@
           </el-form-item>
         </el-col>
       </el-row>
+      <el-row :gutter="20">
+        <el-col :span="12">
+          <el-form-item :label="'产品压力'" prop="productPressure">
+            <el-input v-model="form.productPressure"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item :label="'质检工'" prop="qualityTestingWork">
+            <el-input v-model="form.qualityTestingWork"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20">
+        <el-col :span="12">
+          <el-form-item :label="'配托工'" prop="supportingWork">
+            <el-input v-model="form.supportingWork"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item :label="'打压工'" prop="suppressWork">
+            <el-input v-model="form.suppressWork"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20">
+        <el-col :span="12">
+          <el-form-item :label="'流向地区'" prop="flowArea">
+            <el-input v-model="form.flowArea"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item :label="'流向单位'" prop="flowDirectionUnit">
+            <el-input v-model="form.flowDirectionUnit"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
     </el-form>
     <div slot="footer" style="text-align:center;">
       <el-button type="primary" @click="saveData('form')">保存</el-button>
@@ -73,7 +109,7 @@
   </div>
 </template>
 
-<script>import { addCommodity } from '@/api/commodity/index'
+<script>import { insertCommodity } from '@/api/commodity/index'
 export default {
   props: {
     listInfo: {
@@ -93,7 +129,13 @@ export default {
         specifications: null,
         surfaceTreatment: null,
         varieties: null,
-        nameplateNo: null
+        nameplateNo: null,
+        flowArea: null,
+        flowDirectionUnit: null,
+        productPressure: null,
+        qualityTestingWork: null,
+        supportingWork: null,
+        suppressWork: null
       },
       rules: {
         productName: [
@@ -115,7 +157,7 @@ export default {
       this.$refs[form].validate((valid) => {
         // 判断必填项
         if (valid) {
-          addCommodity(this.form).then(res => {
+          insertCommodity(this.form).then(res => {
             this.$emit('hideDialog', false)
             this.$emit('uploadList')
           })

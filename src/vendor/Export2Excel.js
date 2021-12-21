@@ -208,11 +208,11 @@ export function export_json_to_excel(th, jsonData, defaultTitle,multiHeader = []
 
   console.log('defaultTitle',defaultTitle)*/
 
-  data.unshift(multiHeader);
+  data.unshift(th);
   //此处是第一行行表头
-  for (let i = th.length - 1; i > -1; i--) {
+  /*for (let i = th.length - 1; i > -1; i--) {
     data.unshift(th[i])
-  }
+  }*/
   var ws_name = "SheetJS";
   var wb = new Workbook(), ws = sheet_from_array_of_arrays(data);
 
