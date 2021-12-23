@@ -36,6 +36,7 @@ export default {
       columns: [
         { text: '产品名称', name: 'productName' },
         { text: '产品内码', name: 'productInnerCode' },
+        { text: '铭牌号', name: 'nameplateNo' },
         { text: '材料分类', name: 'materialClassification' },
         { text: '形式', name: 'modality' },
         { text: '订单时间', name: 'orderDate' },
