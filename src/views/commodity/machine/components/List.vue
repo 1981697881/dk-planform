@@ -35,8 +35,8 @@ export default {
       type: null,
       columns: [
         { text: '产品名称', name: 'productName' },
-        { text: '产品内码', name: 'productInnerCode' },
-        { text: '铭牌号', name: 'nameplateNo' },
+        { text: '打印日期', name: 'productInnerCode' },
+        { text: '序列码', name: 'nameplateNo' },
         { text: '材料分类', name: 'materialClassification' },
         { text: '形式', name: 'modality' },
         { text: '订单时间', name: 'orderDate' },
@@ -50,10 +50,11 @@ export default {
         { text: '打压工', name: 'suppressWork' },
         { text: '流向地区', name: 'flowArea' },
         { text: '流向单位', name: 'flowDirectionUnit' },
+        { text: '项目名称', name: 'projectName' },
+        { text: '所属公司', name: 'company', formatt: 'checkStatus' }
       ]
     }
   },
-
   methods: {
     ExportData() {
       import('@/vendor/Export2Excel').then(excel => {
@@ -72,7 +73,7 @@ export default {
         excel.export_json_to_excel(tHeader,data,'产品信息')
       })
     },
-    formatJson(filter, jsonDate){
+    formatJson(filter, jsonDate) {
       return jsonDate.map(v =>
         filter.map(j => {
           return v[j]

@@ -102,6 +102,20 @@
           </el-form-item>
         </el-col>
       </el-row>
+      <el-row :gutter="20">
+        <el-col :span="12">
+          <el-form-item :label="'项目名称'" prop="projectName">
+            <el-input v-model="form.projectName"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item :label="'所属公司'" prop="company">
+            <el-select v-model="form.company" filterable class="width-full" placeholder="请选择">
+              <el-option :label="t.name" :value="t.value" v-for="(t,i) in options" :key="i"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+      </el-row>
     </el-form>
     <div slot="footer" style="text-align:center;">
       <el-button type="primary" @click="saveData('form')">保存</el-button>
@@ -135,15 +149,18 @@ export default {
         productPressure: null,
         qualityTestingWork: null,
         supportingWork: null,
-        suppressWork: null
+        suppressWork: null,
+        projectName: null,
+        company: 0
       },
+      options: [{ name: '杜克阀门(山东)有限公司', value: 0 }, { name: '广东鸿仁自动控制科技有限公司', value: 1 }],
       rules: {
         productName: [
           { required: true, message: '请输入', trigger: 'blur' }
         ],
         productInnerCode: [
           { required: true, message: '请输入', trigger: 'blur' }
-        ],
+        ]
       }
     }
   },

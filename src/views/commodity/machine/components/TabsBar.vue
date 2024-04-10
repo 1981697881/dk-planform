@@ -4,13 +4,24 @@
       <div id="all" class="rowClass">
         <div class="myPrint">
           <div class="pageWarp" v-for="(item,index) in selections" :key="index">
-            <!--<div class="scanImg" :id="'qrCode'+index"></div>-->
-            <vue-qr class="scanImg" :text="'http://14.29.254.232:50005/duke/redirect/scanResult?qrCode=' + item.qrCode"
-                    :margin="0" :logoScale="0.2" :logoSrc="require(`@/assets/img/logo.png`)"></vue-qr>
-            <div
-              style="width: 40mm;margin-left:-4mm;white-space: nowrap;text-align:center;font-size: .12rem;-webkit-transform-origin-x: 0;-webkit-transform: scale(0.80);">
-              杜克阀门产品溯源信息
-            </div>
+            <template v-if="item.company==0">
+              <!--<div class="scanImg" :id="'qrCode'+index"></div>-->
+              <vue-qr class="scanImg" :text="'https://zs.dukevalve.com/duke/redirect/scanResult?qrCode=' + item.qrCode"
+                      :margin="0" :logoScale="0.2" :logoSrc="require(`@/assets/img/logo.png`)"></vue-qr>
+              <div
+                style="width: 40mm;white-space: nowrap;text-align:center;font-size: .12rem;-webkit-transform-origin-x: 0;-webkit-transform: scale(0.80);">
+                杜克阀门产品溯源信息
+              </div>
+            </template>
+            <template v-else>
+              <!--<div class="scanImg" :id="'qrCode'+index"></div>-->
+              <vue-qr class="scanImg" :text="'https://zs.dukevalve.com/duke/redirect/scanResult?qrCode=' + item.qrCode"
+                      :margin="0" :logoScale="0.2" :logoSrc="require(`@/assets/img/hrlogo.png`)"></vue-qr>
+              <div
+                style="width: 40mm;white-space: nowrap;text-align:center;font-size: .12rem;-webkit-transform-origin-x: 0;-webkit-transform: scale(0.80);">
+                鸿仁产品溯源信息
+              </div>
+            </template>
           </div>
         </div>
       </div>
@@ -122,7 +133,6 @@ export default {
       if (file.status == 'ready') {
         this.submitUpload()
       }
-
     },
     creatQrCode(element, val) {
       var deleteNode = document.getElementById(element).innerText = ''
@@ -155,7 +165,7 @@ export default {
       if (this.selections.length > 0) {
         this.$nextTick(() => {
           this.selections.forEach((item, index) => {
-            that.creatQrCode('qrCode' + index, 'http://14.29.254.232:50005/duke/redirect/scanResult?qrCode=' + item.qrCode)
+            that.creatQrCode('qrCode' + index, 'https://zs.dukevalve.com/duke/redirect/scanResult?qrCode=' + item.qrCode)
           })
         })
       } else {
@@ -236,7 +246,7 @@ export default {
   .scanImg {
     height: 23mm;
     width: 23mm;
-    margin-left: 0.5mm;
+    margin-left: 4.3mm;
   }
 
   .printClass {
@@ -253,8 +263,8 @@ export default {
   .rowClass .pageWarp {
     width: 40mm;
     /*float: left;*/
-    padding-left: 7mm;
     page-break-after: always;
+    padding-left: 0.3mm;
   }
 
   .rowClass .pageWarp:nth-child(even) {

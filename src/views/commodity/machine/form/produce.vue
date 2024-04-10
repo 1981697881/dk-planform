@@ -8,7 +8,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item :label="'产品内码'" prop="productInnerCode">
+          <el-form-item :label="'打印日期'" prop="productInnerCode">
             <el-input v-model="form.productInnerCode" disabled></el-input>
           </el-form-item>
         </el-col>

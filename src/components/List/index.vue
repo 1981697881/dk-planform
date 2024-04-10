@@ -19,14 +19,14 @@
     >
       <el-table-column align="center" fixed v-if="type" :type="type?'selection':''"></el-table-column>
       <el-table-column v-if="index" prop="date" label="序号" type="index" align="center" sortable></el-table-column>
-      <slot name="title"></slot>
+      <slot name="title"> </slot>
       <template v-for="(t,i) in columns">
         <el-table-column
           :prop="t.name"
           :key="i"
           :fixed="t.fixed"
           :sortable="t.sort"
-          :formatter="t.formatt!=undefined?(t.formatt == 'checkType'? checkType: checkStatus) : null"
+          :formatter="t.formatt!=undefined?(row, column) => methods[t.formatt](row,column) : null"
           v-if="t.default!=undefined ?(t.default =='img'?false:t.default):true"
           :label="t.text"
           :width="t.width?t.width:(selfAdaption?'':'120px')"
@@ -127,20 +127,33 @@ export default {
     // 是否自定义高度 默认100%
     height:{
       type: String,
-      default: "100%"
+      default: '100%'
     },
     // 自定义按钮
     operationName:{
       type: String,
-      default: "+"
+      default: '+'
     }
   },
   data() {
     return {
-      fileUrl: this.$store.state.user.url+'/movie/uploadFiles/image/',
+      methods: this.$options.methods,
+      fileUrl: this.$store.state.user.url + '/movie/uploadFiles/image/',
     };
   },
+  created() {
+    console.log(this.$options.methods)
+  },
   methods: {
+    checkStatus(row, column) {
+      let stau = ''
+      if (row.company == 0) {
+        stau = '杜克阀门(山东)有限公司'
+      } else if (row.company == 1) {
+        stau = '广东鸿仁自动控制科技有限公司'
+      }
+      return stau
+    },
     sortChange(row) {
       return this.$emit('sortChange', { row });
     },
@@ -159,15 +172,6 @@ export default {
         stau = '影片'
       }else if(row.ctype == 2) {
         stau = '商品'
-      }
-      return  stau
-    },
-    checkStatus(row, column) {
-      let stau = ''
-      if(row.status == 0) {
-        stau = '关闭'
-      }else if(row.status ==1) {
-        stau = '开启'
       }
       return  stau
     },
@@ -212,12 +216,12 @@ export default {
           const values = data.map(item=>Number(item[column.property]))
           const flag = values.every(item=>isNaN(item))
           if(flag){
-            return sums[index] = ""
+            return sums[index] = ''
           }else{
             if(column.property == 'settlementPrice' ||  column.property == 'evenNum'|| column.property == 'adjNum'|| column.property == 'pastNum'|| column.property == 'nowNum') {
               sums[index] = values.reduce((total, item) => total + item);
               sums[index] = Math.round(sums[index] * 100) / 100;
-              sums[index] += ""
+              sums[index] += ''
             }
           }
         }

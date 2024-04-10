@@ -5,7 +5,7 @@ import { resetRouter } from '@/router'
 const state = {
   token: getToken('dkrx'),
   name: '',
-  url: 'http://139.159.136.187:50005',
+  url: 'https://zs.dukevalve.com',
   avatar: '',
   plper: '',
   username: '',
