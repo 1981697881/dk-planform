@@ -9,7 +9,7 @@
               <vue-qr class="scanImg" :text="'https://zs.dukevalve.com/duke/redirect/scanResult?qrCode=' + item.qrCode"
                       :margin="0" :logoScale="0.2" :logoSrc="require(`@/assets/img/logo.png`)"></vue-qr>
               <div
-                style="width: 40mm;white-space: nowrap;text-align:center;font-size: .12rem;-webkit-transform-origin-x: 0;-webkit-transform: scale(0.80);">
+                style="width: 40mm;white-space: nowrap;text-align:center;font-size: .7rem;-webkit-transform-origin-x: 0;-webkit-transform: scale(0.80);">
                 杜克阀门产品溯源信息
               </div>
             </template>
@@ -18,7 +18,7 @@
               <vue-qr class="scanImg" :text="'https://zs.dukevalve.com/duke/redirect/scanResult?qrCode=' + item.qrCode"
                       :margin="0" :logoScale="0.2" :logoSrc="require(`@/assets/img/hrlogo.png`)"></vue-qr>
               <div
-                style="width: 40mm;white-space: nowrap;text-align:center;font-size: .12rem;-webkit-transform-origin-x: 0;-webkit-transform: scale(0.80);">
+                style="width: 40mm;white-space: nowrap;text-align:center;font-size: .7rem;-webkit-transform-origin-x: 0;-webkit-transform: scale(0.80);">
                 鸿仁产品溯源信息
               </div>
             </template>
